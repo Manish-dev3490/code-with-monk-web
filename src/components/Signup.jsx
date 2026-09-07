@@ -5,7 +5,7 @@ import { z } from "zod";
 const signUpSchema = z.object({
   firstName: z
     .string()
-    .min(3, "Name must contain at least 2 characters")
+    .min(3, "Name must contain at least 3 characters")
     .max(30, "Name is too long"),
 
   email: z
