@@ -1,61 +1,70 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosClient from "../utils/axiosClient";
 
-const signUpRegister = createAsyncThunk(
-  "user-auth/register",
+export const signUpRegister = createAsyncThunk(
+  "user/register",
   async (userData, { rejectWithValue }) => {
     try {
-      const response = axiosClient.post("/user/signup", userData);
+      const response = await axiosClient.post("/user/signup", userData);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      console.log(error);
+
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+
+
+export const login = createAsyncThunk(
+  "user/login",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await axiosClient.post("/user/login", userData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
     }
   },
 );
 
-const login = createAsyncThunk(
-  "user-auth/login",
-  async (userData, { rejectWithValue }) => {
+
+
+export const checkAuth = createAsyncThunk(
+  "user/checkAuth",
+  async (_, { rejectWithValue }) => {
     try {
-      const response = axiosClient.post("/user/login", userData);
+      const response = await axiosClient.get("/user/checkAuth");
       return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.response?.data || error.message);
     }
   },
 );
-const checkAuth = createAsyncThunk(
-  "user-auth/checkAuth",
+
+
+export const logout = createAsyncThunk(
+  "user/logout",
   async (_, { rejectWithValue }) => {
     try {
-      const response = axiosClient.get("/user/checkAuth");
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  },
-);
-const logout = createAsyncThunk(
-  "user-auth/login",
-  async (_, { rejectWithValue }) => {
-    try {
-      axiosClient.post("/user/logout");
+      await axiosClient.post("/user/logout");
       return null;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.response?.data || error.message);
     }
   },
 );
 
 
 
-export const userSlice = createSlice({
-  name: "user-auth",
+const userSlice = createSlice({
+  name: "user",
   initialState: {
     isAuthenticated: false,
     loading: false,
     error: null,
-    userData: null,
+    user: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -73,7 +82,7 @@ export const userSlice = createSlice({
       })
       .addCase(signUpRegister.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || "Something went wrong";
+        state.error = action.payload || "Something went wrong";
         state.isAuthenticated = false;
         state.user = null;
       })
@@ -131,3 +140,5 @@ export const userSlice = createSlice({
       });
   },
 });
+
+export default userSlice.reducer;

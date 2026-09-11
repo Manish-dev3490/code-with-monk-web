@@ -1,6 +1,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router";
+import { signUpRegister } from "../store/userSlice";
+import { useEffect } from "react";
 
 const signUpSchema = z.object({
   firstName: z
@@ -8,7 +12,7 @@ const signUpSchema = z.object({
     .min(3, "Name must contain at least 3 characters")
     .max(30, "Name is too long"),
 
-  email: z
+  emailId: z
     .string()
     .email("Please enter a valid email address"),
 
@@ -18,6 +22,12 @@ const signUpSchema = z.object({
 });
 
 const Signup = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
+
   const {
     register,
     handleSubmit,
@@ -26,8 +36,25 @@ const Signup = () => {
     resolver: zodResolver(signUpSchema),
   });
 
+
+  const { isAuthenticated } = useSelector((store) => store.user);
+
+
+
+  useEffect(() => {
+
+    if (isAuthenticated) {
+      navigate('/');
+    }
+
+  }, [isAuthenticated])
+
+
+
   const onSubmit = (data) => {
     console.log(data);
+    dispatch(signUpRegister(data))
+
   };
 
   return (
@@ -81,14 +108,14 @@ const Signup = () => {
             <input
               type="email"
               placeholder="Enter your email"
-              {...register("email")}
-              className={`input input-bordered w-full ${errors.email ? "input-error" : ""
+              {...register("emailId")}
+              className={`input input-bordered w-full ${errors.emailId ? "input-error" : ""
                 }`}
             />
 
-            {errors.email && (
+            {errors.emailId && (
               <p className="text-error text-sm mt-1">
-                {errors.email.message}
+                {errors.emailId.message}
               </p>
             )}
           </div>
