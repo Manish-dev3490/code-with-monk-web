@@ -2,9 +2,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { signUpRegister } from "../store/userSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 const signUpSchema = z.object({
   firstName: z
@@ -23,6 +24,7 @@ const signUpSchema = z.object({
 
 const Signup = () => {
 
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -37,7 +39,7 @@ const Signup = () => {
   });
 
 
-  const { isAuthenticated } = useSelector((store) => store.user);
+  const { isAuthenticated ,loading} = useSelector((store) => store.user);
 
 
 
@@ -128,13 +130,23 @@ const Signup = () => {
               </span>
             </label>
 
-            <input
-              type="password"
-              placeholder="Enter your password"
-              {...register("password")}
-              className={`input input-bordered w-full ${errors.password ? "input-error" : ""
-                }`}
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                {...register("password")}
+                className={`input input-bordered w-full pr-10 ${errors.password ? "input-error" : ""
+                  }`}
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2"
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
 
             {errors.password && (
               <p className="text-error text-sm mt-1">
@@ -147,8 +159,9 @@ const Signup = () => {
           <button
             type="submit"
             className="btn btn-primary w-full text-base"
+            disabled={loading}
           >
-            Create Account
+          {loading?'Signing-Up':'Signup'}
           </button>
 
         </form>
@@ -157,7 +170,8 @@ const Signup = () => {
         <p className="text-center text-sm text-base-content/60 mt-6">
           Already have an account?{" "}
           <span className="text-primary font-medium cursor-pointer">
-            Login
+
+            <Link to={"/login"}>Login</Link>
           </span>
         </p>
 

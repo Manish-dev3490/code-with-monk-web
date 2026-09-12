@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react";
 import { login } from "../store/userSlice";
@@ -125,7 +125,7 @@ const Login = () => {
         <p className="text-center text-sm text-base-content/60 mt-6">
           If you don't have an account signup here?{" "}
           <span className="text-primary font-medium cursor-pointer">
-            Signup
+          <Link to={"/signup"}>Signup</Link>
           </span>
         </p>
 
