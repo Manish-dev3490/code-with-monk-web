@@ -116,7 +116,7 @@ const Login = () => {
             type="submit"
             className="btn btn-primary w-full text-base"
           >
-            Create Account
+           Log in
           </button>
 
         </form>

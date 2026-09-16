@@ -1,7 +1,14 @@
+import Footer from "./footer"
+import Header from "./Header"
+import HeroSection from "./HeroSection"
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div>
+      <Header/>
+      <HeroSection/>
+      <Footer/>
+    </div>
   )
 }
 
