@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosClient from "../utils/axiosClient";
 import { useSelector } from "react-redux";
+import { Link } from "react-router";
 
 const HeroSection = () => {
     const { user } = useSelector((store) => store?.user);
@@ -23,7 +24,6 @@ const HeroSection = () => {
                     "/problem/getAllProblem"
                 );
 
-                console.log(response.data);
 
                 setAllProblems(response.data.data);
                 setDisplayProblem(response.data.data);
@@ -44,7 +44,6 @@ const HeroSection = () => {
                     "/problem/problemSolvedByUser"
                 );
 
-                console.log(response.data);
 
                 setSolvedProblems(response.data);
 
@@ -114,7 +113,7 @@ const HeroSection = () => {
 
 
     return (
-        <div className="flex flex-col gap-6 py-4 px-6">
+        <div className="flex flex-col gap-6 py-10 px-6">
 
             {/* Filters */}
             <div className="flex flex-wrap items-center gap-4">
@@ -172,39 +171,41 @@ const HeroSection = () => {
 
                     displayProblem.map((problem) => (
 
-                        <div
-                            key={problem._id}
-                            className="card bg-base-200 border border-base-300 shadow-sm hover:shadow-md transition"
-                        >
-                            <div className="card-body">
+                        <Link to={`/problem/${problem._id}`}>
+                            <div
+                                key={problem._id}
+                                className="card bg-base-200 border border-base-300 shadow-sm hover:shadow-md transition"
+                            >
+                                <div className="card-body">
 
-                                <h2 className="card-title">
-                                    {problem.title}
-                                </h2>
+                                    <h2 className="card-title">
+                                        {problem.title}
+                                    </h2>
 
-                                <p className="text-sm opacity-70 line-clamp-2">
-                                    {problem.description}
-                                </p>
+                                    <p className="text-sm opacity-70 line-clamp-2">
+                                        {problem.description}
+                                    </p>
 
-                                <div className="flex flex-wrap gap-2 mt-3">
+                                    <div className="flex flex-wrap gap-2 mt-3">
 
-                                    <span className="badge badge-outline">
-                                        {problem.difficultyLevel}
-                                    </span>
-
-                                    {problem.tags?.map((tag) => (
-                                        <span
-                                            key={tag}
-                                            className="badge badge-ghost"
-                                        >
-                                            {tag}
+                                        <span className="badge badge-outline">
+                                            {problem.difficultyLevel}
                                         </span>
-                                    ))}
+
+                                        {problem.tags?.map((tag) => (
+                                            <span
+                                                key={tag}
+                                                className="badge badge-ghost"
+                                            >
+                                                {tag}
+                                            </span>
+                                        ))}
+
+                                    </div>
 
                                 </div>
-
                             </div>
-                        </div>
+                        </Link>
 
                     ))
 

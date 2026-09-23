@@ -9,6 +9,9 @@ import AdminPanel from "./components/AdminPanel";
 import CreateProblem from "./components/CreateProblem";
 import UpdateProblem from "./components/UpdateProblem";
 import DeleteProblem from "./components/DeleteProblem";
+import UpdateForm from "./components/UpdateForm";
+import ProblemPage from "./components/ProblemPage";
+import Profile from "./components/Profile";
 
 function App() {
   const { isAuthenticated, user } = useSelector((store) => store.user);
@@ -24,6 +27,10 @@ function App() {
         <Route
           path="/login"
           element={isAuthenticated ? <Navigate to="/"></Navigate> : <Login />}
+        />
+        <Route
+          path="/problem/:_id"
+          element={isAuthenticated ? <ProblemPage /> : <Navigate to="/login"></Navigate>}
         />
         <Route
           path="/signup"
@@ -45,9 +52,56 @@ function App() {
             )
           }
         ></Route>
-        <Route path="/createproblem" element={isAuthenticated && user?.data?.role === "admin" ? <CreateProblem /> : <Navigate to="/" />} />
-        <Route path="/updateproblem" element={isAuthenticated && user?.data?.role === "admin" ? <UpdateProblem /> : <Navigate to="/" />} />
-        <Route path="/deleteproblem" element={isAuthenticated && user?.data?.role === "admin" ? <DeleteProblem /> : <Navigate to="/" />} />
+        <Route
+          path="/createproblem"
+          element={
+            isAuthenticated && user?.data?.role === "admin" ? (
+              <CreateProblem />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/updateproblem"
+          element={
+            isAuthenticated && user?.data?.role === "admin" ? (
+              <UpdateProblem />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/deleteproblem"
+          element={
+            isAuthenticated && user?.data?.role === "admin" ? (
+              <DeleteProblem />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/updateform/:problemId"
+          element={
+            isAuthenticated && user?.data?.role === "admin" ? (
+              <UpdateForm />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+         <Route
+          path="/profile"
+          element={
+            isAuthenticated ? (
+              <Profile />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
       </Routes>
     </>
   );
