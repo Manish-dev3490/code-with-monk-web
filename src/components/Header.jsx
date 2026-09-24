@@ -1,6 +1,28 @@
 import { Link } from "react-router";
+import { Navigate } from "react-router";
+import axiosClient from "../utils/axiosClient";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../store/userSlice";
 
 const Header = () => {
+
+  const dispatch = useDispatch();
+
+
+  async function handleLogout() {
+    try {
+      console.log("api calling")
+      await axiosClient.post("/user/logout");
+      dispatch(logoutAction());
+
+      console.log("api calling success")
+
+      Navigate("/login");
+    } catch (error) {
+      console.log("Logout error:", error);
+    }
+  }
+
   return (
     <header className="navbar bg-base-300 shadow-sm px-8">
 
@@ -51,9 +73,11 @@ const Header = () => {
                 </li>
 
                 <li>
-                  <button type="button">
+
+                  <button onClick={handleLogout} type="button">
                     Logout
                   </button>
+
                 </li>
 
               </ul>

@@ -66,7 +66,14 @@ const userSlice = createSlice({
     error: null,
     user: null,
   },
-  reducers: {},
+  reducers: {
+     logoutAction: (state) => {
+      state.isAuthenticated = false;
+      state.user = null;
+      state.error = null;
+      state.loading = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
 
@@ -141,4 +148,5 @@ const userSlice = createSlice({
   },
 });
 
+export const { logoutAction } = userSlice.actions;
 export default userSlice.reducer;
