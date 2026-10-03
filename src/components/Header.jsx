@@ -66,11 +66,7 @@ const Header = () => {
                   </Link>
                 </li>
 
-                <li>
-                  <Link to="/chatbot">
-                    AI Chatbot
-                  </Link>
-                </li>
+
 
                 <li>
 
