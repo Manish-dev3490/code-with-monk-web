@@ -12,6 +12,9 @@ import DeleteProblem from "./components/DeleteProblem";
 import UpdateForm from "./components/UpdateForm";
 import ProblemPage from "./components/ProblemPage";
 import Profile from "./components/Profile";
+import RequestReceived from "./components/RequestReceived";
+import Connections from "./components/Connections";
+import Feed from "./components/Feed";
 
 function App() {
   const { isAuthenticated, user } = useSelector((store) => store.user);
@@ -27,6 +30,18 @@ function App() {
         <Route
           path="/login"
           element={isAuthenticated ? <Navigate to="/"></Navigate> : <Login />}
+        />
+        <Route
+          path="/requests"
+          element={isAuthenticated ? <RequestReceived /> : <Login />}
+        />
+        <Route
+          path="/connections"
+          element={isAuthenticated ? <Connections /> : <Login />}
+        />
+        <Route
+          path="/feed"
+          element={isAuthenticated ? <Feed /> : <Login />}
         />
         <Route
           path="/problem/:_id"
@@ -92,7 +107,7 @@ function App() {
             )
           }
         />
-         <Route
+        <Route
           path="/profile"
           element={
             isAuthenticated ? (

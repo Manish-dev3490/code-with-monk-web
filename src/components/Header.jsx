@@ -1,10 +1,12 @@
 import { Link } from "react-router";
 import { Navigate } from "react-router";
 import axiosClient from "../utils/axiosClient";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../store/userSlice";
 
 const Header = () => {
+
+  const { user } = useSelector((store) => store?.user);
 
   const dispatch = useDispatch();
 
@@ -37,12 +39,14 @@ const Header = () => {
       <div className="flex-none">
         <ul className="menu menu-horizontal items-center gap-2">
 
-          <li>
-            <Link to="/adminpanel">Admin</Link>
-          </li>
+          {user?.data?.role === "admin" && (
+            <li>
+              <Link to="/adminpanel">Admin</Link>
+            </li>
+          )}
 
           <li>
-            <Link to="/developers">Developers</Link>
+            <Link to="/feed">Feed</Link>
           </li>
 
           <li>
@@ -56,7 +60,7 @@ const Header = () => {
           {/* User Dropdown */}
           <li>
             <details>
-              <summary>Manish</summary>
+              <summary>{user?.data?.firstName}</summary>
 
               <ul className="bg-base-100 rounded-box w-44 p-2 shadow-lg absolute right-4">
 
