@@ -30,12 +30,12 @@ const UpdateForm = () => {
             startCode: [
                 { language: "C++", initialCode: "" },
                 { language: "Java", initialCode: "" },
-                { language: "JavaScript", initialCode: "" },
+                { language: "Python", initialCode: "" },
             ],
             referenceSolution: [
                 { language: "C++", completeCode: "" },
                 { language: "Java", completeCode: "" },
-                { language: "JavaScript", completeCode: "" },
+                { language: "Python", completeCode: "" },
             ],
         },
     });
