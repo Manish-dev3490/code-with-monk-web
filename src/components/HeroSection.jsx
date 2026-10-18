@@ -167,7 +167,7 @@ const HeroSection = () => {
             {/* Problems */}
             <div className="flex flex-col gap-6 min-h-screen">
 
-                {displayProblem.length > 0 ? (
+                {displayProblem.length >= 0 ? (
 
                     displayProblem.map((problem) => (
 
